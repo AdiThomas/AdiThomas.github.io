@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Aditya Thomas</title>
+  <meta name="description" content="Aditya Thomas, software engineer. Full-stack apps, DevOps and data tools for manufacturing, plus hardware projects from a computer engineering degree.">
+  <meta name="theme-color" content="#0d1013">
+  <meta property="og:title" content="Aditya Thomas">
+  <meta property="og:description" content="Software engineer. Full-stack, DevOps and data tools for manufacturing.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230d1013'/%3E%3Cpath d='M3 16 Q 8.5 4 14 16 T 25 16 T 30 12' fill='none' stroke='%23f2c94c' stroke-width='2.6' stroke-linecap='round'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip" href="#ch1">Skip to content</a>
+
+  <!-- Power-on self test, like a bench instrument. Shown once per visit; any key or click skips it. -->
+  <div class="selftest" id="selftest" aria-hidden="true">
+    <div class="selftest-inner">
+      <div class="selftest-brand">AT-2026 &nbsp;DIGITAL STORAGE OSCILLOSCOPE</div>
+      <ol class="selftest-lines" id="selftest-lines"></ol>
+      <div class="selftest-hint">Press any key to skip</div>
+    </div>
+  </div>
+
+  <header class="topbar">
+    <a class="brand" href="#top" aria-label="Aditya Thomas, back to top">
+      <svg viewBox="0 0 32 20" aria-hidden="true"><path d="M1 10 Q 5 1 9 10 T 17 10 T 25 10 T 31 6" /></svg>
+      <span>A. THOMAS</span>
+    </a>
+    <nav class="channels" aria-label="Sections">
+      <a href="#ch1" class="ch ch-1" data-key="1"><kbd>1</kbd>About</a>
+      <a href="#ch2" class="ch ch-2" data-key="2"><kbd>2</kbd>Experience</a>
+      <a href="#ch3" class="ch ch-3" data-key="3"><kbd>3</kbd>Projects</a>
+      <a href="#ch4" class="ch ch-4" data-key="4"><kbd>4</kbd>Skills</a>
+      <a href="#trig" class="ch ch-t" data-key="5"><kbd>5</kbd>Contact</a>
+    </nav>
+  </header>
+
+  <main id="top">
+    <!-- HERO: the instrument -->
+    <section class="hero" aria-label="Introduction">
+      <div class="hero-head">
+        <p class="eyebrow">Software engineer · Magna International</p>
+        <h1>Aditya Thomas</h1>
+        <p class="lede">I build full-stack apps, pipelines and dashboards that turn factory data into decisions. Computer engineer by training, so I'm just as happy with an FPGA as with a Postgres query.</p>
+      </div>
+
+      <div class="scope" id="scope">
+        <div class="scope-bezel">
+          <div class="scope-screen">
+            <canvas id="scope-canvas" aria-label="Animated oscilloscope trace. Move the pointer over it to change frequency and amplitude."></canvas>
+            <div class="readout readout-tl"><span class="c1">CH1</span> <span id="ro-vdiv">500mV</span>/div &nbsp; <span class="c2">CH2</span> 2.00V/div</div>
+            <div class="readout readout-tr">M <span id="ro-tdiv">1.00ms</span> &nbsp; <span class="trig">T↗</span> 0.00V</div>
+            <div class="readout readout-bl"><span class="c1">f</span> = <span id="ro-freq">300 Hz</span> &nbsp; <span class="c1">Vpp</span> = <span id="ro-vpp">2.40 V</span></div>
+            <div class="readout readout-br"><span id="ro-mode">RUN</span> · <span id="ro-wave">SINE</span></div>
+          </div>
+        </div>
+        <div class="scope-panel" role="group" aria-label="Oscilloscope controls">
+          <div class="panel-group">
+            <span class="panel-label">Waveform</span>
+            <div class="seg" id="wave-buttons">
+              <button type="button" data-wave="sine" aria-pressed="true">Sine</button>
+              <button type="button" data-wave="square" aria-pressed="false">Square</button>
+              <button type="button" data-wave="saw" aria-pressed="false">Saw</button>
+              <button type="button" data-wave="tri" aria-pressed="false">Tri</button>
+            </div>
+          </div>
+          <div class="panel-group">
+            <span class="panel-label">Mode</span>
+            <div class="seg" id="mode-buttons">
+              <button type="button" data-mode="yt" aria-pressed="true">Y–T</button>
+              <button type="button" data-mode="xy" aria-pressed="false">X–Y</button>
+            </div>
+          </div>
+          <div class="panel-group">
+            <span class="panel-label">Acquire</span>
+            <div class="seg">
+              <button type="button" id="run-stop" aria-pressed="false">Run / Stop</button>
+            </div>
+          </div>
+          <p class="panel-hint">Move over the screen to tune it.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CH1: About -->
+    <section class="channel" id="ch1" aria-labelledby="ch1-h" data-ch="1">
+      <div class="ch-tag"><span class="dot"></span>CH1</div>
+      <h2 id="ch1-h">About</h2>
+      <div class="about-grid">
+        <div class="about-text">
+          <p>I'm a Software Engineer at <strong>Magna International</strong>, where I build the internal tools people use to run production lines. That means full-stack web apps in Java and React, dashboards for quality alerts, downtime and weld parameters, and pipelines that pull operational data out of Databricks.</p>
+          <p>I'm finishing a <strong>Bachelor of Engineering in Computer Engineering (Co-op)</strong> at the University of Guelph. Before Magna I worked in IT at the City of Mississauga and ATS Corporation, which is where I picked up a habit of asking "what happens when this breaks at 3 a.m.?"</p>
+          <p>Outside work I run a self-hosted cloud on a Raspberry Pi in my house, with its own iPhone app.</p>
+        </div>
+        <dl class="spec-card">
+          <div><dt>Based in</dt><dd>Ontario, Canada</dd></div>
+          <div><dt>Now</dt><dd>Software Engineer, Magna</dd></div>
+          <div><dt>School</dt><dd>U of Guelph, B.Eng. CompE '26</dd></div>
+          <div><dt>Into</dt><dd>Full-stack · DevOps · Data · FPGAs</dd></div>
+          <div><dt>Status</dt><dd><span class="led"></span> Open to new-grad roles</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <!-- CH2: Experience -->
+    <section class="channel" id="ch2" aria-labelledby="ch2-h" data-ch="2">
+      <div class="ch-tag"><span class="dot"></span>CH2</div>
+      <h2 id="ch2-h">Experience</h2>
+
+      <!-- Logic-analyzer view of the timeline: each lane is high while that role was active. -->
+      <figure class="logic" aria-label="Timeline of roles from 2021 to 2026">
+        <div class="logic-scroll">
+          <div class="logic-grid" id="logic"></div>
+        </div>
+        <figcaption>Logic-analyzer view: each lane goes high while the role was active.</figcaption>
+      </figure>
+
+      <ol class="roles">
+        <li class="role">
+          <div class="role-when">Sep 2026 – now</div>
+          <div class="role-body">
+            <h3>Software Engineer <span class="at">Magna International</span></h3>
+            <ul>
+              <li>Build full-stack applications in Java, React, PostgreSQL and SQLite that streamline internal workflows and make operations visible.</li>
+              <li>Built <strong>FLD Companion</strong>, one web app that brings Power BI reports, Grafana dashboards and internal tools together for department leaders.</li>
+              <li>Built drill-down dashboards for quality alerts, production downtime, line availability and weld parameter changes, so people can go from a red number to the rows behind it.</li>
+              <li>Work with Databricks and AI/ML to turn manufacturing data into applications, and keep the Linux environments they run on healthy.</li>
+            </ul>
+            <p class="chips"><span>Java</span><span>React</span><span>PostgreSQL</span><span>Databricks</span><span>Grafana</span><span>Power BI</span><span>Linux</span></p>
+          </div>
+        </li>
+        <li class="role">
+          <div class="role-when">Apr 2026 – Sep 2026</div>
+          <div class="role-body">
+            <h3>IT DevOps / Developer <span class="at">Magna International</span></h3>
+            <ul>
+              <li>Designed and built full-stack web apps across frontend, APIs, services and databases.</li>
+              <li>Built and maintained GitHub Actions pipelines for build, test and deploy.</li>
+              <li>Automated repetitive operational work with Bash and PowerShell.</li>
+              <li>Integrated applications with enterprise systems and the plant's Manufacturing Execution System (MES), working with IT, engineering and production.</li>
+            </ul>
+            <p class="chips"><span>GitHub Actions</span><span>CI/CD</span><span>Bash</span><span>PowerShell</span><span>REST APIs</span><span>MES</span></p>
+          </div>
+        </li>
+        <li class="role">
+          <div class="role-when">Apr 2025 – Dec 2025</div>
+          <div class="role-body">
+            <h3>IT Analyst Intern <span class="at">City of Mississauga</span></h3>
+            <ul>
+              <li>Troubleshot Windows systems, authentication, MFA, networking and endpoints across a large municipal IT environment.</li>
+              <li>Handled endpoint imaging, deployment and lifecycle management under enterprise security standards.</li>
+            </ul>
+            <p class="chips"><span>Intune</span><span>Endpoint Manager</span><span>Windows</span><span>MFA</span></p>
+          </div>
+        </li>
+        <li class="role">
+          <div class="role-when">May 2024 – Aug 2024</div>
+          <div class="role-body">
+            <h3>IT Consultant Intern <span class="at">ATS Corporation</span></h3>
+            <ul>
+              <li>Configured, deployed and supported 150+ PCs and laptops for 500+ employees across offices and the manufacturing floor.</li>
+              <li>Tracked 700+ IT assets and supported Microsoft 365, VPN, VMware and SolidWorks.</li>
+            </ul>
+            <p class="chips"><span>VMware</span><span>Microsoft 365</span><span>SolidWorks</span></p>
+          </div>
+        </li>
+      </ol>
+    </section>
+
+    <!-- CH3: Projects -->
+    <section class="channel" id="ch3" aria-labelledby="ch3-h" data-ch="3">
+      <div class="ch-tag"><span class="dot"></span>CH3</div>
+      <h2 id="ch3-h">Projects</h2>
+
+      <article class="project feature">
+        <div class="feature-text">
+          <p class="project-kicker"><img src="../../assets/pivault/icon.png" alt="" width="28" height="28"> Self-hosted cloud · 2026</p>
+          <h3>PiVault</h3>
+          <p>My own replacement for iCloud Photos. It runs on a Raspberry Pi 5, and a custom iPhone app backs up the camera roll and lets me browse, upload and download from anywhere over Tailscale, with no ports open to the internet.</p>
+          <ul>
+            <li>FastAPI backend with a separate worker for thumbnails, HEIC and video, deduplicated by SHA-256.</li>
+            <li>React Native (Expo) app: timeline, viewer, files, background backup.</li>
+            <li>Three SSDs pooled with mergerfs plus SnapRAID parity, nightly encrypted restic backups and a monthly automated restore test.</li>
+            <li>One SD-card image provisions the whole Pi with Ansible. Prometheus and Grafana for monitoring.</li>
+          </ul>
+          <div class="metrics">
+            <div><b>45</b><span>backend tests</span></div>
+            <div><b>17</b><span>end-to-end tests</span></div>
+            <div><b>1</b><span>file to rebuild the Pi</span></div>
+          </div>
+          <p class="chips"><span>Python</span><span>FastAPI</span><span>PostgreSQL</span><span>React Native</span><span>Docker</span><span>Ansible</span><span>GitHub Actions</span></p>
+        </div>
+        <div class="phones" aria-label="PiVault app screenshots">
+          <img src="../../assets/pivault/photos.png" alt="PiVault photo timeline grouped by month" loading="lazy">
+          <img src="../../assets/pivault/viewer.png" alt="PiVault full-screen viewer with photo details" loading="lazy">
+          <img src="../../assets/pivault/files.png" alt="PiVault Files tab" loading="lazy">
+        </div>
+      </article>
+
+      <div class="project-grid">
+        <article class="project wip">
+          <p class="project-kicker"><span class="led"></span> Capstone · in progress · 2026–27</p>
+          <h3>Early Clog Detection for 3D Printers</h3>
+          <p>Nozzle clogs on desktop FDM printers usually go unnoticed until the part is already ruined. Our team is building an add-on for a Klipper printer that spots a clog forming, clears it safely when it can, and pauses and alerts the user when it can't.</p>
+          <dl class="targets">
+            <div><dt>≥ 5 min</dt><dd>warning before the first visible defect</dd></div>
+            <div><dt>70%</dt><dd>of recoverable clogs fixed with no defect</dd></div>
+            <div><dt>≤ 1 in 10</dt><dd>normal prints with a false alarm</dd></div>
+            <div><dt>−50%</dt><dd>filament wasted on clog runs</dd></div>
+          </dl>
+          <p class="chips"><span>Klipper</span><span>Sensors</span><span>Embedded</span><span>Signal processing</span></p>
+        </article>
+        <article class="project">
+          <p class="project-kicker">FPGA · Fall 2025</p>
+          <h3>Digital Waveform Synthesizer</h3>
+          <p>A sine-wave generator written in VHDL and synthesized onto a Nexys A7 FPGA, with a software interface through the Xilinx SDK. The same generator in hardware ran <strong>20× faster</strong> than the software version, thanks to parallel processing. The oscilloscope at the top of this page is a nod to it.</p>
+          <p class="chips"><span>VHDL</span><span>C</span><span>Xilinx Vivado</span><span>Nexys A7</span></p>
+        </article>
+        <article class="project">
+          <p class="project-kicker">Magna · 2026</p>
+          <h3>FLD Companion</h3>
+          <p>One place for department leaders to see how the plant is running. It pulls Power BI reports, Grafana dashboards and internal apps together, with drill-downs from quality alerts and downtime to the data underneath.</p>
+          <p class="chips"><span>React</span><span>Java</span><span>Power BI</span><span>Grafana</span></p>
+        </article>
+        <article class="project">
+          <p class="project-kicker">Robotics · Winter 2024</p>
+          <h3>Autonomous Wall-Detection Vehicle</h3>
+          <p>An Arduino vehicle that navigates an obstacle course on its own. I led the technical build and designed a dual-sensor workaround when a single sensor couldn't see reliably enough.</p>
+          <p class="chips"><span>C++</span><span>Arduino</span><span>Sensors</span><span>SolidWorks</span></p>
+        </article>
+      </div>
+    </section>
+
+    <!-- CH4: Skills, laid out like a component datasheet -->
+    <section class="channel" id="ch4" aria-labelledby="ch4-h" data-ch="4">
+      <div class="ch-tag"><span class="dot"></span>CH4</div>
+      <h2 id="ch4-h">Skills</h2>
+      <div class="datasheet">
+        <div class="ds-head">
+          <span>AT-2026 · Engineer, full-stack</span>
+          <span>Datasheet rev. 2026-11</span>
+        </div>
+        <div class="ds-scroll">
+          <table>
+            <thead><tr><th scope="col">Parameter</th><th scope="col">Values</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">Languages</th><td>Java · Python · C/C++ · SQL · JavaScript · HTML/CSS · VHDL · Bash · PowerShell</td></tr>
+              <tr><th scope="row">Web</th><td>React · REST APIs · FastAPI · React Native (Expo)</td></tr>
+              <tr><th scope="row">Data &amp; AI</th><td>Databricks · PostgreSQL · SQLite · Power BI · RAG · Embeddings · Vector search · LangChain · MLflow</td></tr>
+              <tr><th scope="row">DevOps</th><td>Git · GitHub Actions · Docker · Linux · Ansible · Azure · VMware</td></tr>
+              <tr><th scope="row">Observability</th><td>Grafana · Prometheus · deployment automation</td></tr>
+              <tr><th scope="row">Hardware</th><td>FPGA (Nexys A7) · Xilinx Vivado &amp; SDK · Arduino · Raspberry Pi</td></tr>
+              <tr><th scope="row">CAD</th><td>SolidWorks · AutoCAD</td></tr>
+              <tr><th scope="row">Certification</th><td>SOLIDWORKS Associate in Mechanical Design (Dassault Systèmes, 2023)</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section class="channel trig" id="trig" aria-labelledby="trig-h" data-ch="t">
+      <div class="ch-tag"><span class="dot"></span>TRIG</div>
+      <h2 id="trig-h">Get in touch</h2>
+      <p class="trig-lede">Hiring, building something interesting, or just want to talk about homelabs? I'd like to hear from you.</p>
+      <div class="contact">
+        <div class="contact-email">
+          <span class="contact-label">Email</span>
+          <span class="contact-value" id="email">athoma33@uoguelph.ca</span>
+          <button type="button" class="copy" id="copy-email">Copy</button>
+        </div>
+        <a class="contact-link" href="https://github.com/AdiThomas" target="_blank" rel="noopener">GitHub <span aria-hidden="true">↗</span></a>
+        <!-- TODO: replace with your LinkedIn profile URL -->
+        <a class="contact-link" href="https://www.linkedin.com/" target="_blank" rel="noopener">LinkedIn <span aria-hidden="true">↗</span></a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <span>Aditya Thomas · <span id="year">2026</span></span>
+    <span>Calibrated in Ontario. Press <kbd>1</kbd>–<kbd>5</kbd> to jump between channels.</span>
+  </footer>
+
+  <script src="js/scope.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,323 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Aditya Thomas</title>
+  <meta name="description" content="Aditya Thomas, software engineer in automotive manufacturing. Full-stack apps, DevOps and data tools, and a circuit you can drive.">
+  <meta name="theme-color" content="#0b0d10">
+  <meta property="og:title" content="Aditya Thomas">
+  <meta property="og:description" content="Software engineer in automotive manufacturing. Take the wheel.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230b0d10'/%3E%3Cpath d='M6 22 C 6 10, 14 8, 18 14 S 26 20, 26 10' fill='none' stroke='%23ff5a36' stroke-width='3.2' stroke-linecap='round'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip" href="#about">Skip to content</a>
+
+  <header class="topbar">
+    <a class="brand" href="#top" aria-label="Aditya Thomas, back to top">
+      <span class="brand-num">26</span>
+      <span class="brand-name">A. THOMAS</span>
+    </a>
+    <nav class="nav" aria-label="Sections">
+      <a href="#about" data-sector="0"><span class="nav-s">S1</span>About</a>
+      <a href="#experience" data-sector="1"><span class="nav-s">S2</span>Experience</a>
+      <a href="#projects" data-sector="2"><span class="nav-s">S3</span>Projects</a>
+      <a href="#skills" data-sector="3"><span class="nav-s">S4</span>Skills</a>
+      <a href="#contact" class="nav-radio">Radio</a>
+    </nav>
+  </header>
+
+  <main id="top">
+    <!-- ================= HERO: the pit wall ================= -->
+    <section class="hero" aria-labelledby="hero-name">
+      <div class="hero-copy">
+        <p class="eyebrow"><span class="live-dot"></span> Software engineer · Automotive manufacturing</p>
+        <h1 id="hero-name">Aditya<br>Thomas</h1>
+        <p class="lede">I build the software behind production lines: full-stack apps, pipelines and dashboards that turn plant-floor data into faster decisions. Computer engineer, car person, and the kind of F1 fan who watches the onboard telemetry instead of the race.</p>
+        <div class="hero-actions">
+          <button type="button" class="btn btn-go" id="take-wheel">Take the wheel</button>
+          <a class="btn btn-ghost" href="#about">Read the data instead</a>
+        </div>
+        <p class="hint">Keyboard: <kbd>↑</kbd> throttle <kbd>↓</kbd> brake <kbd>←</kbd><kbd>→</kbd> steer <kbd>R</kbd> reset <kbd>Esc</kbd> hand back</p>
+      </div>
+
+      <div class="pitwall" id="stage">
+        <div class="pitwall-head">
+          <span>Live session · Circuit AT-26</span>
+          <span class="mode" id="hud-mode" data-mode="auto">Autopilot</span>
+        </div>
+
+        <div class="track-wrap">
+          <canvas id="track" tabindex="0" aria-label="Top-down race circuit with a car. Press Take the wheel, then use the arrow keys to drive. Each of the four sectors stands for a section of this page."></canvas>
+          <div class="toast" id="track-toast" role="status" aria-live="polite"></div>
+        </div>
+
+        <div class="hud">
+          <div class="hud-speed">
+            <span class="hud-big" id="hud-speed">0</span><span class="hud-unit">km/h</span>
+          </div>
+          <div class="hud-gear"><span class="hud-label">Gear</span><span id="hud-gear">N</span></div>
+          <div class="pedals" aria-hidden="true">
+            <span class="pedal"><i id="hud-throttle" class="pedal-fill throttle"></i></span>
+            <span class="pedal"><i id="hud-brake" class="pedal-fill brake"></i></span>
+          </div>
+          <dl class="laps">
+            <div><dt>Lap</dt><dd id="hud-lap">0:00.000</dd></div>
+            <div><dt>Last</dt><dd id="hud-last">–:––.–––</dd></div>
+            <div><dt>Your best</dt><dd id="hud-best" class="purple">–:––.–––</dd></div>
+          </dl>
+          <span class="status" id="hud-status" data-valid="true">Lap valid</span>
+        </div>
+
+        <div class="sectors" role="group" aria-label="Sector times. Each sector links to a section of the page.">
+          <button type="button" class="sector" id="sector-0" data-state="idle"><span class="sector-name">S1 · About</span><span class="sector-time">––.–––</span></button>
+          <button type="button" class="sector" id="sector-1" data-state="idle"><span class="sector-name">S2 · Experience</span><span class="sector-time">––.–––</span></button>
+          <button type="button" class="sector" id="sector-2" data-state="idle"><span class="sector-name">S3 · Projects</span><span class="sector-time">––.–––</span></button>
+          <button type="button" class="sector" id="sector-3" data-state="idle"><span class="sector-name">S4 · Skills</span><span class="sector-time">––.–––</span></button>
+        </div>
+
+        <div class="trace-wrap">
+          <span class="trace-label">Speed trace · <i class="key-now">this lap</i> <i class="key-best">your best or the autopilot</i></span>
+          <canvas id="trace" aria-hidden="true"></canvas>
+        </div>
+
+        <div class="controls">
+          <div class="touchpad" aria-label="Touch controls">
+            <button type="button" class="pad" data-pad="left" aria-label="Steer left">◀</button>
+            <button type="button" class="pad" data-pad="right" aria-label="Steer right">▶</button>
+            <button type="button" class="pad pad-brake" data-pad="down" aria-label="Brake">Brake</button>
+            <button type="button" class="pad pad-gas" data-pad="up" aria-label="Throttle">Throttle</button>
+          </div>
+          <div class="control-btns">
+            <button type="button" class="btn btn-small" id="reset-car">Reset</button>
+            <button type="button" class="btn btn-small" id="autopilot">Autopilot</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= S1: About (driver card) ================= -->
+    <section class="sec" id="about" aria-labelledby="about-h" data-sector="0">
+      <header class="sec-head">
+        <span class="sec-tag">Sector 1</span>
+        <h2 id="about-h">Driver profile</h2>
+      </header>
+      <div class="about">
+        <div class="about-text">
+          <p>I'm a Software Engineer at <strong>Magna International</strong>, one of the world's largest automotive suppliers. I build the internal tools people use to run production lines: full-stack apps in Java and React, drill-down dashboards for quality alerts, downtime, line availability and weld parameters, and pipelines that pull operational data out of Databricks.</p>
+          <p>I'm finishing a <strong>Bachelor of Engineering in Computer Engineering (Co-op)</strong> at the University of Guelph. Before Magna I worked IT at the City of Mississauga and ATS Corporation, so I've seen what happens when systems break on a plant floor, and I build to avoid it.</p>
+          <p>Away from work: Formula 1 (I care more about the strategy calls and the data than the podium), cars in general, and a self-hosted cloud running on a Raspberry Pi at home.</p>
+        </div>
+        <aside class="driver-card" aria-label="Quick facts">
+          <div class="driver-top">
+            <span class="driver-num">26</span>
+            <div>
+              <div class="driver-name">THOMAS</div>
+              <div class="driver-team">Magna International</div>
+            </div>
+          </div>
+          <dl>
+            <div><dt>Role</dt><dd>Software Engineer</dd></div>
+            <div><dt>Base</dt><dd>Ontario, Canada</dd></div>
+            <div><dt>School</dt><dd>U of Guelph · B.Eng. CompE '26</dd></div>
+            <div><dt>Strengths</dt><dd>Full-stack · DevOps · Data · Hardware</dd></div>
+            <div><dt>Status</dt><dd><span class="live-dot green"></span> Open to new-grad roles</dd></div>
+          </dl>
+        </aside>
+      </div>
+    </section>
+
+    <!-- ================= S2: Experience (stint history) ================= -->
+    <section class="sec" id="experience" aria-labelledby="exp-h" data-sector="1">
+      <header class="sec-head">
+        <span class="sec-tag">Sector 2</span>
+        <h2 id="exp-h">Stint history</h2>
+      </header>
+
+      <div class="timing" role="table" aria-label="Roles, newest first">
+        <div class="timing-row timing-headrow" role="row">
+          <span role="columnheader">Pos</span><span role="columnheader">Team</span><span role="columnheader">Role</span><span role="columnheader">Stint</span><span role="columnheader">Compound</span>
+        </div>
+        <div class="timing-row" role="row"><span role="cell" class="pos">1</span><span role="cell"><b>Magna International</b></span><span role="cell">Software Engineer</span><span role="cell" class="mono">Sep 2026 – now</span><span role="cell"><i class="tyre soft">S</i></span></div>
+        <div class="timing-row" role="row"><span role="cell" class="pos">2</span><span role="cell"><b>Magna International</b></span><span role="cell">IT DevOps / Developer</span><span role="cell" class="mono">Apr – Sep 2026</span><span role="cell"><i class="tyre medium">M</i></span></div>
+        <div class="timing-row" role="row"><span role="cell" class="pos">3</span><span role="cell"><b>City of Mississauga</b></span><span role="cell">IT Analyst Intern</span><span role="cell" class="mono">Apr – Dec 2025</span><span role="cell"><i class="tyre hard">H</i></span></div>
+        <div class="timing-row" role="row"><span role="cell" class="pos">4</span><span role="cell"><b>ATS Corporation</b></span><span role="cell">IT Consultant Intern</span><span role="cell" class="mono">May – Aug 2024</span><span role="cell"><i class="tyre hard">H</i></span></div>
+      </div>
+      <p class="legend">Compounds, loosely: <i class="tyre soft">S</i> building software full-time, <i class="tyre medium">M</i> DevOps and development, <i class="tyre hard">H</i> IT infrastructure, the durable stuff.</p>
+
+      <ol class="stints">
+        <li class="stint">
+          <div class="stint-meta"><span class="mono">Sep 2026 – now</span><span>Magna International</span></div>
+          <div class="stint-body">
+            <h3>Software Engineer</h3>
+            <ul>
+              <li>Build full-stack applications in Java, React, PostgreSQL and SQLite that streamline internal workflows and make plant operations visible.</li>
+              <li>Built <strong>FLD Companion</strong>, one web app that brings Power BI reports, Grafana dashboards and internal tools together for department leaders.</li>
+              <li>Built drill-down dashboards for quality alerts, production downtime, line availability and weld parameter changes, so people can go from a red number to the rows behind it.</li>
+              <li>Work with Databricks and AI/ML to turn manufacturing data into applications, and look after the Linux environments they run on.</li>
+            </ul>
+            <p class="chips"><span>Java</span><span>React</span><span>PostgreSQL</span><span>Databricks</span><span>Grafana</span><span>Power BI</span><span>Linux</span></p>
+          </div>
+        </li>
+        <li class="stint">
+          <div class="stint-meta"><span class="mono">Apr – Sep 2026</span><span>Magna International</span></div>
+          <div class="stint-body">
+            <h3>IT DevOps / Developer</h3>
+            <ul>
+              <li>Designed and built full-stack web apps across frontend, APIs, services and databases.</li>
+              <li>Built and maintained GitHub Actions pipelines for build, test and deploy.</li>
+              <li>Automated repetitive operational work with Bash and PowerShell.</li>
+              <li>Integrated applications with enterprise systems and the plant's Manufacturing Execution System (MES), working with IT, engineering and production.</li>
+            </ul>
+            <p class="chips"><span>GitHub Actions</span><span>CI/CD</span><span>Bash</span><span>PowerShell</span><span>REST APIs</span><span>MES</span></p>
+          </div>
+        </li>
+        <li class="stint">
+          <div class="stint-meta"><span class="mono">Apr – Dec 2025</span><span>City of Mississauga</span></div>
+          <div class="stint-body">
+            <h3>IT Analyst Intern</h3>
+            <ul>
+              <li>Troubleshot Windows systems, authentication, MFA, networking and endpoints across a large municipal IT environment.</li>
+              <li>Handled endpoint imaging, deployment and lifecycle management under enterprise security standards.</li>
+            </ul>
+            <p class="chips"><span>Intune</span><span>Endpoint Manager</span><span>Windows</span><span>MFA</span></p>
+          </div>
+        </li>
+        <li class="stint">
+          <div class="stint-meta"><span class="mono">May – Aug 2024</span><span>ATS Corporation</span></div>
+          <div class="stint-body">
+            <h3>IT Consultant Intern</h3>
+            <ul>
+              <li>Configured, deployed and supported 150+ PCs and laptops for 500+ employees across offices and the manufacturing floor.</li>
+              <li>Tracked 700+ IT assets and supported Microsoft 365, VPN, VMware and SolidWorks.</li>
+            </ul>
+            <p class="chips"><span>VMware</span><span>Microsoft 365</span><span>SolidWorks</span></p>
+          </div>
+        </li>
+      </ol>
+    </section>
+
+    <!-- ================= S3: Projects (garage) ================= -->
+    <section class="sec" id="projects" aria-labelledby="proj-h" data-sector="2">
+      <header class="sec-head">
+        <span class="sec-tag">Sector 3</span>
+        <h2 id="proj-h">The garage</h2>
+      </header>
+
+      <article class="build feature">
+        <div class="build-text">
+          <p class="build-kicker"><img src="assets/pivault/icon.png" alt="" width="28" height="28"> Self-hosted cloud · 2026</p>
+          <h3>PiVault</h3>
+          <p>My own replacement for iCloud Photos. It runs on a Raspberry Pi 5, and a custom iPhone app backs up the camera roll and lets me browse, upload and download from anywhere over Tailscale, with no ports open to the internet.</p>
+          <ul>
+            <li>FastAPI backend with a separate worker for thumbnails, HEIC and video, deduplicated by SHA-256.</li>
+            <li>React Native (Expo) app: timeline, viewer, files and background backup.</li>
+            <li>Three SSDs pooled with mergerfs plus SnapRAID parity, nightly encrypted backups and a monthly automated restore test.</li>
+            <li>One SD-card image provisions the whole Pi with Ansible; Prometheus and Grafana watch it.</li>
+          </ul>
+          <div class="spec-row">
+            <div><b>45</b><span>backend tests</span></div>
+            <div><b>17</b><span>end-to-end tests</span></div>
+            <div><b>1</b><span>image to rebuild the Pi</span></div>
+          </div>
+          <p class="chips"><span>Python</span><span>FastAPI</span><span>PostgreSQL</span><span>React Native</span><span>Docker</span><span>Ansible</span><span>GitHub Actions</span></p>
+        </div>
+        <div class="phones" aria-label="PiVault app screenshots">
+          <img src="assets/pivault/photos.png" alt="PiVault photo timeline grouped by month" loading="lazy">
+          <img src="assets/pivault/viewer.png" alt="PiVault full-screen viewer with photo details" loading="lazy">
+          <img src="assets/pivault/files.png" alt="PiVault Files tab" loading="lazy">
+        </div>
+      </article>
+
+      <div class="builds">
+        <article class="build wip">
+          <p class="build-kicker"><span class="live-dot"></span> Capstone · in progress · 2026–27</p>
+          <h3>Early Clog Detection for 3D Printers</h3>
+          <p>Nozzle clogs on desktop FDM printers usually go unnoticed until the part is already ruined. Our team is building an add-on for a Klipper printer that spots a clog forming, clears it safely when it can, and pauses and alerts the user when it can't.</p>
+          <dl class="targets">
+            <div><dt>≥ 5 min</dt><dd>warning before the first visible defect</dd></div>
+            <div><dt>70%</dt><dd>of recoverable clogs fixed with no defect</dd></div>
+            <div><dt>≤ 1 in 10</dt><dd>normal prints with a false alarm</dd></div>
+            <div><dt>−50%</dt><dd>filament wasted on clog runs</dd></div>
+          </dl>
+          <p class="chips"><span>Klipper</span><span>Sensors</span><span>Embedded</span><span>Signal processing</span></p>
+        </article>
+        <article class="build">
+          <p class="build-kicker">Magna · 2026</p>
+          <h3>FLD Companion</h3>
+          <p>One place for department leaders to see how the plant is running. It pulls Power BI reports, Grafana dashboards and internal apps together, with drill-downs from quality alerts and downtime to the data underneath.</p>
+          <p class="chips"><span>React</span><span>Java</span><span>Power BI</span><span>Grafana</span></p>
+        </article>
+        <article class="build">
+          <p class="build-kicker">FPGA · Fall 2025</p>
+          <h3>Digital Waveform Synthesizer</h3>
+          <p>A sine-wave generator written in VHDL and synthesized onto a Nexys A7 FPGA, with a software interface through the Xilinx SDK. In hardware it ran <strong>20× faster</strong> than the same generator in software, thanks to parallel processing.</p>
+          <p class="chips"><span>VHDL</span><span>C</span><span>Xilinx Vivado</span><span>Nexys A7</span></p>
+        </article>
+        <article class="build">
+          <p class="build-kicker">Robotics · Winter 2024</p>
+          <h3>Autonomous Wall-Detection Vehicle</h3>
+          <p>An Arduino vehicle that drives an obstacle course on its own. I led the technical build and designed a dual-sensor workaround when one sensor couldn't see reliably enough.</p>
+          <p class="chips"><span>C++</span><span>Arduino</span><span>Sensors</span><span>SolidWorks</span></p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ================= S4: Skills (setup sheet) ================= -->
+    <section class="sec" id="skills" aria-labelledby="skills-h" data-sector="3">
+      <header class="sec-head">
+        <span class="sec-tag">Sector 4</span>
+        <h2 id="skills-h">Setup sheet</h2>
+      </header>
+      <div class="setup">
+        <div class="setup-head"><span>Car 26 · Thomas</span><span>Setup rev. 2026-11</span></div>
+        <div class="setup-grid">
+          <section class="setup-block"><h3>Languages</h3><p>Java · Python · C/C++ · SQL · JavaScript · HTML/CSS · VHDL · Bash · PowerShell</p></section>
+          <section class="setup-block"><h3>Web</h3><p>React · REST APIs · FastAPI · React Native (Expo)</p></section>
+          <section class="setup-block"><h3>Data &amp; AI</h3><p>Databricks · PostgreSQL · SQLite · Power BI · RAG · Embeddings · Vector search · LangChain · MLflow</p></section>
+          <section class="setup-block"><h3>DevOps</h3><p>Git · GitHub Actions · Docker · Linux · Ansible · Azure · VMware</p></section>
+          <section class="setup-block"><h3>Telemetry</h3><p>Grafana · Prometheus · deployment automation</p></section>
+          <section class="setup-block"><h3>Hardware</h3><p>FPGA (Nexys A7) · Xilinx Vivado &amp; SDK · Arduino · Raspberry Pi</p></section>
+          <section class="setup-block"><h3>CAD</h3><p>SolidWorks · AutoCAD</p></section>
+          <section class="setup-block"><h3>Homologation</h3><p>SOLIDWORKS Associate in Mechanical Design (Dassault Systèmes, 2023)</p></section>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= Contact (team radio) ================= -->
+    <section class="sec radio" id="contact" aria-labelledby="radio-h">
+      <header class="sec-head">
+        <span class="sec-tag">Team radio</span>
+        <h2 id="radio-h">Box, box</h2>
+      </header>
+      <div class="radio-log" aria-label="Contact">
+        <p class="msg"><span class="who">ENGINEER</span> Hiring, building something in manufacturing or motorsport, or just want to talk F1 strategy? Get on the radio.</p>
+        <div class="msg msg-actions">
+          <span class="who">DRIVER</span>
+          <div class="contact">
+            <div class="contact-email">
+              <span class="contact-value" id="email">athoma33@uoguelph.ca</span>
+              <button type="button" class="btn btn-small btn-go" id="copy-email">Copy email</button>
+            </div>
+            <a class="btn btn-small" href="https://github.com/AdiThomas" target="_blank" rel="noopener">GitHub ↗</a>
+            <!-- TODO: replace with your LinkedIn profile URL -->
+            <a class="btn btn-small" href="https://www.linkedin.com/" target="_blank" rel="noopener">LinkedIn ↗</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <span>Aditya Thomas · <span id="year">2026</span></span>
+    <span>Fastest lap is saved in your browser. Beat it.</span>
+  </footer>
+
+  <script src="js/track.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
