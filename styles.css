@@ -195,15 +195,14 @@ main { padding-left: max(20px, env(safe-area-inset-left, 0px)); padding-right: m
 
 /* timing table */
 .timing { border: 1px solid var(--line); border-radius: 8px; overflow: hidden; font-size: 15px; }
-.timing-row { display: grid; grid-template-columns: 52px minmax(0, 1.3fr) minmax(0, 1.3fr) minmax(0, 1fr) 90px; align-items: center; gap: 12px; padding: 11px 16px; border-bottom: 1px solid var(--line); }
+.timing-row { display: grid; grid-template-columns: 52px minmax(0, 1.3fr) minmax(0, 1.3fr) minmax(0, 1fr); align-items: center; gap: 12px; padding: 11px 16px; border-bottom: 1px solid var(--line); }
 .timing-row:nth-child(even) { background: var(--panel); }
 .timing-row:last-child { border-bottom: 0; }
 .timing-headrow { font: 500 11px var(--mono); color: var(--faint); letter-spacing: .1em; text-transform: uppercase; background: var(--bg); }
 .pos { font: 700 italic 20px var(--display); color: var(--fg); }
 @media (max-width: 680px) {
-  .timing-row { grid-template-columns: 34px minmax(0, 1fr) 40px; row-gap: 2px; }
+  .timing-row { grid-template-columns: 34px minmax(0, 1fr); row-gap: 2px; }
   .timing-row > :nth-child(3), .timing-row > :nth-child(4) { grid-column: 2; font-size: 13px; color: var(--dim); }
-  .timing-row > :nth-child(5) { grid-column: 3; grid-row: 1; }
   .timing-headrow { display: none; }
 }
 .tyre { display: inline-grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; border: 3px solid; font: 700 11px var(--mono); font-style: normal; background: #111; color: var(--fg); }
@@ -275,3 +274,17 @@ main { padding-left: max(20px, env(safe-area-inset-left, 0px)); padding-right: m
 }
 
 .sector[data-state="auto"] .sector-time { color: var(--fg); }
+
+/* Magna: one employer, two roles */
+.stint-note { font-size: 12px; color: var(--faint); }
+.stint-employer .stint-body { display: grid; gap: 30px; }
+.role-block { display: grid; gap: 8px; }
+.role-block + .role-block { padding-top: 26px; border-top: 1px solid var(--line); }
+.role-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.role-dates { font-size: 13px; color: var(--accent); }
+.role-summary { color: var(--fg); font-size: 17px; max-width: 64ch; }
+.role-areas { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 6px; }
+@media (max-width: 760px) { .role-areas { grid-template-columns: minmax(0, 1fr); } }
+.area { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 14px 16px; display: grid; gap: 6px; align-content: start; }
+.area h4 { margin: 0; font: 600 15px var(--display); letter-spacing: .06em; text-transform: uppercase; color: var(--yellow); }
+.area p { color: var(--dim); font-size: 15px; }
