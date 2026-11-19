@@ -303,6 +303,7 @@
 
   function resize() {
     const rect = canvas.getBoundingClientRect();
+    if (rect.width < 2 || rect.height < 2) return; // not laid out yet; the ResizeObserver calls again
     dpr = Math.min(window.devicePixelRatio || 1, 2);
     canvas.width = Math.round(rect.width * dpr);
     canvas.height = Math.round(rect.height * dpr);
@@ -443,6 +444,7 @@
 
   function render() {
     ctx.setTransform(1, 0, 0, 1, 0, 0);
+    if (!staticLayer) return;
     ctx.drawImage(staticLayer, 0, 0);
     ctx.setTransform(scale * dpr, 0, 0, scale * dpr, 0, 0);
 

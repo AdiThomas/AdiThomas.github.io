@@ -7,12 +7,14 @@
   <meta name="description" content="Aditya Thomas, software engineer in automotive manufacturing. Full-stack apps, DevOps and data tools, and a circuit you can drive.">
   <meta name="theme-color" content="#0b0d10">
   <meta property="og:title" content="Aditya Thomas">
-  <meta property="og:description" content="Software engineer in automotive manufacturing. Take the wheel.">
+  <meta property="og:description" content="Software engineer in automotive manufacturing and JDM car guy. Strip the build down, then take the wheel.">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230b0d10'/%3E%3Cpath d='M6 22 C 6 10, 14 8, 18 14 S 26 20, 26 10' fill='none' stroke='%23ff5a36' stroke-width='3.2' stroke-linecap='round'/%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap">
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="garage.css">
+  <script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}</script>
 </head>
 <body>
   <a class="skip" href="#about">Skip to content</a>
@@ -32,12 +34,122 @@
   </header>
 
   <main id="top">
-    <!-- ================= HERO: the pit wall ================= -->
-    <section class="hero" aria-labelledby="hero-name">
+    <!-- ================= GARAGE: the exploded build ================= -->
+    <section class="garage" id="garage" aria-labelledby="g-title">
+      <script>(function(){var s=document.getElementById("garage");try{var c=document.createElement("canvas");if(c.getContext("webgl2")||c.getContext("webgl")){s.classList.add("g-on");setTimeout(function(){if(!window.__garageReady)s.classList.remove("g-on")},15000);}}catch(e){}})();</script>
+      <div class="g-stage">
+        <canvas id="g-canvas" aria-label="3D model of a blue JDM coupe. Scroll to take it apart; drag to look around; click a part to see which skills it stands for."></canvas>
+        <svg class="g-leader" id="g-leader" aria-hidden="true"></svg>
+        <p class="g-loading" aria-hidden="true"><i></i>Warming up the K20</p>
+        <div class="g-tags" id="g-tags" aria-hidden="true"></div>
+
+        <div class="g-head" id="g-head">
+          <p class="eyebrow"><span class="live-dot"></span> Garage · Build sheet 26</p>
+          <h1 id="g-title">Aditya<br>Thomas</h1>
+          <p class="g-lede">Software engineer in automotive manufacturing, and a JDM car guy. This is the build: a Vivid Blue Pearl coupe in the spirit of the RSX Type-S. Scroll to strip it down. Every system is a skill.</p>
+        </div>
+
+        <div class="g-scroll" id="g-scroll" aria-hidden="true"><span>Scroll to strip it down</span><i></i></div>
+
+        <nav class="g-systems" id="g-systems" aria-label="Car systems">
+          <span class="g-systems-h"><span id="g-count">–</span> parts · 8 systems</span>
+          <button type="button" aria-pressed="false"><b>01</b>Chassis</button>
+          <button type="button" aria-pressed="false"><b>02</b>Engine</button>
+          <button type="button" aria-pressed="false"><b>03</b>Body</button>
+          <button type="button" aria-pressed="false"><b>04</b>ECU &amp; cockpit</button>
+          <button type="button" aria-pressed="false"><b>05</b>Cooling</button>
+          <button type="button" aria-pressed="false"><b>06</b>Gearbox</button>
+          <button type="button" aria-pressed="false"><b>07</b>Wheels &amp; brakes</button>
+          <button type="button" aria-pressed="false"><b>08</b>Suspension</button>
+        </nav>
+
+        <div class="g-cards" id="g-cards">
+          <article class="g-card" data-sys="0">
+            <button type="button" class="g-close" aria-label="Close">×</button>
+            <p class="g-card-k"><b>01</b> Chassis · shell, cage, bucket seats <span data-parts></span></p>
+            <h3>Platform &amp; reliability</h3>
+            <p>The part that has to hold when everything else is pushing on it. For me that's the Linux environments my apps run on, and troubleshooting across the app, database and server layers until they stay up.</p>
+            <p class="chips"><span>Linux</span><span>Bash</span><span>PowerShell</span><span>Azure</span><span>VMware</span></p>
+          </article>
+          <article class="g-card" data-sys="1">
+            <button type="button" class="g-close" aria-label="Close">×</button>
+            <p class="g-card-k"><b>02</b> Engine · K20, intake, header, exhaust <span data-parts></span></p>
+            <h3>Backend</h3>
+            <p>Where the real work happens. Services, APIs and databases in Java and Python, from Magna's internal plant apps to PiVault's FastAPI server and its media worker.</p>
+            <p class="chips"><span>Java</span><span>Python</span><span>FastAPI</span><span>REST APIs</span><span>SQL</span><span>PostgreSQL</span><span>SQLite</span></p>
+          </article>
+          <article class="g-card" data-sys="2">
+            <button type="button" class="g-close" aria-label="Close">×</button>
+            <p class="g-card-k"><b>03</b> Body · panels, lights, wing <span data-parts></span></p>
+            <h3>Frontend</h3>
+            <p>The part people see first, and the panel gaps have to be right. React dashboards with drill-downs for plant leaders and engineers, and a React Native app for PiVault.</p>
+            <p class="chips"><span>React</span><span>React Native (Expo)</span><span>JavaScript</span><span>HTML/CSS</span></p>
+          </article>
+          <article class="g-card" data-sys="3">
+            <button type="button" class="g-close" aria-label="Close">×</button>
+            <p class="g-card-k"><b>04</b> ECU &amp; cockpit · ECU, gauges, wheel <span data-parts></span></p>
+            <h3>Data &amp; AI</h3>
+            <p>The ECU reads every sensor; the gauges show the driver what matters. Databricks pipelines and Power BI reports that turn plant-floor data into decisions, with AI/ML work on top.</p>
+            <p class="chips"><span>Databricks</span><span>Power BI</span><span>RAG</span><span>Embeddings</span><span>Vector search</span><span>LangChain</span><span>MLflow</span></p>
+          </article>
+          <article class="g-card" data-sys="4">
+            <button type="button" class="g-close" aria-label="Close">×</button>
+            <p class="g-card-k"><b>05</b> Cooling · radiator, fans, oil cooler <span data-parts></span></p>
+            <h3>Monitoring</h3>
+            <p>Nobody thinks about the radiator until the temp needle moves. Grafana and Prometheus watching my apps and my Raspberry Pi, so problems show up on a dashboard before they show up as downtime.</p>
+            <p class="chips"><span>Grafana</span><span>Prometheus</span></p>
+          </article>
+          <article class="g-card" data-sys="5">
+            <button type="button" class="g-close" aria-label="Close">×</button>
+            <p class="g-card-k"><b>06</b> Gearbox · 6-speed, axles, shifter <span data-parts></span></p>
+            <h3>DevOps</h3>
+            <p>Same clean shift, every time. GitHub Actions pipelines that build, test and deploy on every push, Docker for packaging, and Ansible to provision a whole Pi from one image.</p>
+            <p class="chips"><span>Git</span><span>GitHub Actions</span><span>Docker</span><span>Ansible</span><span>CI/CD</span></p>
+          </article>
+          <article class="g-card" data-sys="6">
+            <button type="button" class="g-close" aria-label="Close">×</button>
+            <p class="g-card-k"><b>07</b> Wheels &amp; brakes · 17s, drilled rotors <span data-parts></span></p>
+            <h3>Hardware</h3>
+            <p>Where the car meets the real world. FPGA design in VHDL on a Nexys A7, Arduino robotics, and Raspberry Pi builds.</p>
+            <p class="chips"><span>FPGA</span><span>VHDL</span><span>Vivado</span><span>C/C++</span><span>Arduino</span><span>Raspberry Pi</span></p>
+          </article>
+          <article class="g-card" data-sys="7">
+            <button type="button" class="g-close" aria-label="Close">×</button>
+            <p class="g-card-k"><b>08</b> Suspension · coilovers, subframes <span data-parts></span></p>
+            <h3>CAD</h3>
+            <p>Geometry gets designed before it gets built. SolidWorks and AutoCAD, with a SOLIDWORKS Associate certification.</p>
+            <p class="chips"><span>SolidWorks</span><span>AutoCAD</span><span>CSWA 2023</span></p>
+          </article>
+        </div>
+
+        <div class="g-controls">
+          <div class="g-paint" role="group" aria-label="Paint">
+            <span class="g-paint-name" id="g-paint-name">Vivid Blue Pearl</span>
+            <div class="g-swatches">
+              <button type="button" class="g-swatch" style="--c:#1d4fe6" data-color="#1d4fe6" data-name="Vivid Blue Pearl" data-pearl="0.2" data-metal="0.45" data-sheen="#7fb2ff" aria-pressed="true" aria-label="Vivid Blue Pearl"></button>
+              <button type="button" class="g-swatch" style="--c:#eef0f2" data-color="#e9ecef" data-name="Pearl White" data-pearl="0.25" data-metal="0.15" data-sheen="#ffe9c9" aria-pressed="false" aria-label="Pearl White"></button>
+              <button type="button" class="g-swatch" style="--c:#9aa1aa" data-color="#8f969f" data-name="Satin Silver" data-pearl="0" data-metal="0.8" aria-pressed="false" aria-label="Satin Silver"></button>
+              <button type="button" class="g-swatch" style="--c:#c4121a" data-color="#b80f17" data-name="Rally Red" data-pearl="0.1" data-metal="0.4" aria-pressed="false" aria-label="Rally Red"></button>
+              <button type="button" class="g-swatch" style="--c:#0d0f12" data-color="#0b0c0e" data-name="Midnight Black" data-pearl="0.2" data-metal="0.6" aria-pressed="false" aria-label="Midnight Black"></button>
+            </div>
+          </div>
+          <div class="g-btns">
+            <button type="button" class="btn btn-small" id="g-lights" aria-pressed="false">Lights</button>
+            <button type="button" class="btn btn-small btn-go" id="g-rev">Rev it</button>
+          </div>
+          <div class="g-tach" aria-live="off"><span class="g-rpm" id="g-rpm">850</span><span class="g-rpm-u">rpm</span><span class="g-vtec" id="g-vtec">VTEC</span></div>
+        </div>
+
+        <p class="g-next" id="g-next"><a href="#trackday">Next: track day ↓</a></p>
+      </div>
+    </section>
+
+    <!-- ================= TRACK DAY: the pit wall ================= -->
+    <section class="hero" id="trackday" aria-labelledby="hero-name">
       <div class="hero-copy">
-        <p class="eyebrow"><span class="live-dot"></span> Software engineer · Automotive manufacturing</p>
-        <h1 id="hero-name">Aditya<br>Thomas</h1>
-        <p class="lede">I build the software behind production lines: full-stack apps, pipelines and dashboards that turn plant-floor data into faster decisions. Computer engineer by training, and a lifelong car and F1 fan.</p>
+        <p class="eyebrow"><span class="live-dot"></span> Track day · Circuit AT-26</p>
+        <h2 class="hero-title" id="hero-name">Track<br>day</h2>
+        <p class="lede">I build the software behind production lines: full-stack apps, pipelines and dashboards that turn plant-floor data into faster decisions. Computer engineer by training, and a lifelong car and F1 fan. Take the wheel: each sector of the circuit is a section of this page.</p>
         <div class="hero-actions">
           <button type="button" class="btn btn-go" id="take-wheel">Take the wheel</button>
           <a class="btn btn-ghost" href="#experience">View experience</a>
@@ -190,13 +302,6 @@
             </div>
           </div>
         </li>
-        <li>Built and maintained GitHub Actions pipelines for build, test and deploy.</li>
-              <li>Automated repetitive operational work with Bash and PowerShell.</li>
-              <li>Integrated applications with enterprise systems and the plant's Manufacturing Execution System (MES), working with IT, engineering and production.</li>
-            </ul>
-            <p class="chips"><span>GitHub Actions</span><span>CI/CD</span><span>Bash</span><span>PowerShell</span><span>REST APIs</span><span>MES</span></p>
-          </div>
-        </li>
         <li class="stint">
           <div class="stint-meta"><span class="mono">Apr – Dec 2025</span><span>City of Mississauga</span></div>
           <div class="stint-body">
@@ -335,10 +440,11 @@
 
   <footer class="footer">
     <span>Aditya Thomas · <span id="year">2026</span></span>
-    <span>Built from scratch: HTML, CSS and a canvas physics loop.</span>
+    <span>Built from scratch: a procedural three.js garage, a canvas physics loop, plain HTML and CSS.</span>
   </footer>
 
   <script src="js/track.js"></script>
   <script src="js/main.js"></script>
+  <script type="module" src="js/garage.js"></script>
 </body>
 </html>

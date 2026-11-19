@@ -2,6 +2,11 @@
 // copy-email button and the footer year.
 (function () {
   document.documentElement.classList.add('js');
+  // The garage sits under the sticky top bar, so it needs the bar's height.
+  const bar = document.querySelector('.topbar');
+  const setBar = () => bar && document.documentElement.style.setProperty('--topbar-h', bar.offsetHeight + 'px');
+  setBar();
+  addEventListener('resize', setBar);
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   // Highlight the nav link for the section in view.
