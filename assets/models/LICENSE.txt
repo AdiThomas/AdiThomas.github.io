@@ -1,0 +1,8 @@
+rsx.glb is adapted from "2008 Ings+1 N-Spec Aero Acura RSX DC5" by Ddiaz Design
+https://sketchfab.com/3d-models/2008-ings1-n-spec-aero-acura-rsx-dc5-e0f233d9e5ef4bfa8946ebe437566779
+Licensed under CC BY-NC-SA 4.0 (http://creativecommons.org/licenses/by-nc-sa/4.0/).
+
+Changes: rescaled to real size, grouped into named parts for an exploded view
+(hood, bumpers, doors, fenders, hatch, wing, skirts, lights, exhaust, interior,
+wheels, brakes), rims decimated, textures downsized, Draco-compressed.
+This adapted model is shared under the same CC BY-NC-SA 4.0 license.

@@ -1,0 +1,95 @@
+/* ---------- hero: scroll-driven exploded view ---------- */
+/* Pad matches the content edge of the .sec grid below. */
+.hero { --pad: max(20px, calc((100vw - 1240px) / 2)); position: relative; margin-left: calc(-1 * max(20px, env(safe-area-inset-left, 0px))); margin-right: calc(-1 * max(20px, env(safe-area-inset-right, 0px))); }
+.g-stage { position: relative; background: var(--bg); }
+
+/* Fallback (no JS, no WebGL, or the model failed): a plain text hero with the skill cards as a list. */
+.g-stage { padding: 56px 20px 40px; min-height: min(86vh, 860px); display: flex; flex-direction: column; justify-content: center; gap: 36px; }
+#g-canvas, .g-loading, .g-leader, .g-labels, .g-close { display: none; }
+.g-head { position: relative; z-index: 2; max-width: 1240px; width: 100%; margin: 0 auto; }
+.g-cards { max-width: 1240px; width: 100%; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; }
+.g-head h1 { font-size: clamp(56px, 9vw, 132px); line-height: .86; font-weight: 800; text-transform: uppercase; letter-spacing: -.005em; margin: 18px 0 24px; }
+.g-lede { color: var(--dim); font-size: 17px; max-width: 46ch; padding-top: 18px; border-top: 1px solid var(--line-2); }
+
+/* 3D mode: applied as soon as JS is on so there is no layout jump; hero.js adds .hero-failed to undo it. */
+.js .hero:not(.hero-failed) { height: 300vh; height: 300svh; margin-top: calc(-1 * var(--topbar-h, 53px)); }
+.js .hero:not(.hero-failed) .g-stage { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; padding: 0; display: block; min-height: 0; background: radial-gradient(58% 62% at 66% 56%, #151517 0%, var(--bg) 100%); }
+.js .hero:not(.hero-failed) #g-canvas { display: block; position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; transition: opacity .9s ease; touch-action: pan-y; outline: none; }
+.hero-ready #g-canvas { opacity: 1 !important; }
+
+/* loading: a thin progress line and a label */
+.js .hero:not(.hero-failed):not(.hero-ready) .g-loading { display: grid; justify-items: center; gap: 12px; position: absolute; left: 66%; top: 54%; transform: translate(-50%, -50%); font: 500 11px var(--mono); letter-spacing: .18em; text-transform: uppercase; color: var(--faint); }
+.g-loading i { display: block; width: 132px; height: 1px; background: var(--line-2); overflow: hidden; }
+.g-loading b { display: block; height: 100%; width: 100%; background: var(--fg); transform-origin: left; transform: scaleX(var(--load, .3)); transition: transform .3s ease; }
+.g-loading.indet b { width: 40%; transform: none; animation: g-load 1.2s ease-in-out infinite; }
+@keyframes g-load { from { transform: translateX(-100%); } to { transform: translateX(250%); } }
+
+/* text: fades away as the car comes apart */
+.js .hero:not(.hero-failed) .g-head { position: absolute; z-index: 3; left: var(--pad); top: 50%; width: min(540px, 36vw); max-width: none; margin: 0; pointer-events: none;
+  opacity: calc(1 - var(--hs, 0)); transform: translate(calc(var(--hs, 0) * -28px), -50%); visibility: visible; }
+.js .hero:not(.hero-failed) .g-head.gone { visibility: hidden; }
+.js .hero:not(.hero-failed) .g-head h1 { text-shadow: 0 10px 40px rgba(0, 0, 0, .55); }
+
+/* leader lines and labels */
+.js .hero:not(.hero-failed) .g-leader { display: block; position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; overflow: visible; z-index: 2; }
+.g-leader g { opacity: 0; transition: opacity .5s ease; }
+.labels-on .g-leader g { opacity: 1; }
+.has-focus .g-leader g { opacity: 0; }
+.has-focus .g-leader g.act { opacity: 1; }
+.g-leader path { fill: none; stroke: rgba(242, 241, 236, .5); stroke-width: 1; }
+.g-leader rect { fill: var(--fg); }
+.g-leader g.act path { stroke: var(--accent); }
+.g-leader g.act rect { fill: var(--accent); }
+
+.js .hero:not(.hero-failed) .g-labels { display: block; position: absolute; inset: 0; pointer-events: none; z-index: 4; }
+.g-label { position: absolute; left: 0; top: 0; display: flex; align-items: center; gap: 9px; white-space: nowrap; cursor: pointer; pointer-events: none; visibility: hidden; opacity: 0;
+  font: 500 11px/1 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--fg);
+  background: rgba(10, 10, 11, .72); border: 1px solid var(--line-2); border-radius: 0; padding: 7px 10px; backdrop-filter: blur(6px);
+  transition: opacity .5s ease, border-color .2s, background .2s; }
+.g-label b { color: var(--accent); font-weight: 500; }
+.g-label:hover { border-color: var(--fg); }
+.g-label[aria-pressed="true"] { border-color: var(--accent); }
+.labels-on .g-label { visibility: visible; opacity: 1; pointer-events: auto; }
+.labels-on .g-label:nth-child(2) { transition-delay: .05s; } .labels-on .g-label:nth-child(3) { transition-delay: .1s; } .labels-on .g-label:nth-child(4) { transition-delay: .15s; }
+.labels-on .g-label:nth-child(5) { transition-delay: .2s; } .labels-on .g-label:nth-child(6) { transition-delay: .25s; } .labels-on .g-label:nth-child(7) { transition-delay: .3s; } .labels-on .g-label:nth-child(8) { transition-delay: .35s; }
+.has-focus .g-label[aria-pressed="false"] { opacity: .55; }
+
+/* cards */
+.g-card { background: var(--panel); border: 1px solid var(--line-2); border-radius: 0; padding: 22px 24px 20px; display: grid; gap: 10px; position: relative; overflow: hidden; align-content: start; }
+.g-card::before { content: ""; position: absolute; inset: 0 auto 0 0; width: 2px; background: var(--accent); }
+.g-card h3 { font-size: 32px; line-height: 1; text-transform: uppercase; }
+.g-card p { color: var(--dim); font-size: 15px; }
+.g-card .chips { margin-top: 2px; }
+.g-card-k { font: 500 11px var(--mono) !important; letter-spacing: .12em; text-transform: uppercase; color: var(--dim) !important; padding-right: 34px; }
+.g-card-k b { color: var(--accent); font-weight: 500; margin-right: 6px; }
+.g-close { position: absolute; right: 10px; top: 10px; width: 30px; height: 30px; border-radius: 0; border: 1px solid var(--line-2); background: transparent; color: var(--dim); font: 400 18px/1 var(--body); cursor: pointer; }
+.g-close:hover { color: var(--fg); border-color: var(--dim); }
+.js .hero:not(.hero-failed) .g-close { display: block; }
+.js .hero:not(.hero-failed) .g-cards { display: block; position: absolute; z-index: 5; left: var(--pad); top: 50%; width: min(410px, 32vw); transform: translateY(-50%); pointer-events: none; max-width: none; margin: 0; }
+.js .hero:not(.hero-failed) .g-card { position: absolute; top: 0; left: 0; right: 0; transform: translate(-18px, -50%); opacity: 0; visibility: hidden; transition: opacity .35s ease, transform .5s cubic-bezier(.2, .8, .2, 1), visibility 0s .5s; background: color-mix(in srgb, var(--panel) 90%, transparent); backdrop-filter: blur(12px); box-shadow: 0 30px 80px -30px #000; }
+.js .hero:not(.hero-failed) .g-card.on { opacity: 1; visibility: visible; transform: translate(0, -50%); pointer-events: auto; transition: opacity .35s ease .08s, transform .5s cubic-bezier(.2, .8, .2, 1) .08s, visibility 0s; }
+
+@media (max-width: 899px) {
+  .js .hero:not(.hero-failed) .g-stage { background: radial-gradient(90% 40% at 50% 30%, #151517 0%, var(--bg) 100%); }
+  .js .hero:not(.hero-failed) .g-head { left: 20px; right: 20px; top: auto; bottom: 26px; width: auto; transform: translate(0, calc(var(--hs, 0) * 24px)); }
+  .g-head h1 { font-size: clamp(48px, 14.5vw, 76px); margin: 12px 0 14px; }
+  .g-lede { font-size: 15px; padding-top: 14px; }
+  .js .hero:not(.hero-failed):not(.hero-ready) .g-loading { left: 50%; top: 30%; }
+  .js .hero:not(.hero-failed) .g-cards { left: 14px; right: 14px; width: auto; top: auto; bottom: 14px; transform: none; }
+  .js .hero:not(.hero-failed) .g-card { top: auto; bottom: 0; transform: translateY(18px); padding: 18px 18px 16px; }
+  .js .hero:not(.hero-failed) .g-card.on { transform: translateY(0); }
+  .g-card h3 { font-size: 26px; }
+  .g-card p { font-size: 14px; }
+  .g-label { padding: 6px 7px; gap: 0; }
+  .g-label span { display: none; }
+  .g-label[aria-pressed="true"] span { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .g-loading.indet b { animation: none; }
+  .js .hero:not(.hero-failed) #g-canvas, .g-label, .g-leader g, .js .hero:not(.hero-failed) .g-card { transition: none; }
+}
+
+/* footer credit */
+.footer .credit { color: var(--faint); font-size: 11px; opacity: .85; max-width: 62ch; }
+.footer .credit a { color: inherit; text-decoration: underline; text-decoration-color: var(--line-2); text-underline-offset: 3px; }
+.footer .credit a:hover { color: var(--dim); }

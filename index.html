@@ -13,7 +13,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,500..800&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+JP:wght@400;500&display=swap">
   <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="garage.css">
+  <link rel="stylesheet" href="hero.css">
   <script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}</script>
 </head>
 <body>  <a class="skip" href="#about">Skip to content</a>
@@ -33,14 +33,11 @@
   </header>
 
   <main id="top">
-    <!-- ================= HERO: the exploded build ================= -->
-    <section class="garage" id="garage" aria-labelledby="g-title">
-      <!-- 3D garage is off until the real RSX model is in assets/models/; js/garage.js stays in the repo. -->
+    <!-- ================= HERO: scroll-driven exploded RSX ================= -->
+    <section class="hero" id="garage" aria-labelledby="g-title">
       <div class="g-stage">
-        <canvas id="g-canvas" aria-label="3D model of a blue JDM coupe. Scroll to take it apart; drag to look around; click a part to see which skills it stands for."></canvas>
-        <svg class="g-leader" id="g-leader" aria-hidden="true"></svg>
-        <p class="g-loading" aria-hidden="true"><i></i>Warming up the K20</p>
-        <div class="g-tags" id="g-tags" aria-hidden="true"></div>
+        <canvas id="g-canvas" aria-label="3D model of a blue Acura RSX. Scroll to take it apart, then pick a system to see which skills it stands for."></canvas>
+        <p class="g-loading" aria-hidden="true"><span>Loading RSX</span><i><b></b></i></p>
 
         <div class="g-head" id="g-head">
           <p class="eyebrow"><span class="jp" lang="ja">紹介</span><span>Portfolio · Software engineer</span></p>
@@ -48,98 +45,76 @@
           <p class="g-lede">Software engineer in automotive manufacturing. I build the full-stack apps, pipelines and dashboards that run production lines. Computer engineer by training, JDM car guy by choice.</p>
         </div>
 
-        <div class="g-scroll" id="g-scroll" aria-hidden="true"><span>Scroll to strip it down</span><i></i></div>
-
-        <nav class="g-systems" id="g-systems" aria-label="Car systems">
-          <span class="g-systems-h"><span id="g-count">–</span> parts · 8 systems</span>
-          <button type="button" aria-pressed="false"><b>01</b>Chassis</button>
-          <button type="button" aria-pressed="false"><b>02</b>Engine</button>
-          <button type="button" aria-pressed="false"><b>03</b>Body</button>
-          <button type="button" aria-pressed="false"><b>04</b>ECU &amp; cockpit</button>
-          <button type="button" aria-pressed="false"><b>05</b>Cooling</button>
-          <button type="button" aria-pressed="false"><b>06</b>Gearbox</button>
-          <button type="button" aria-pressed="false"><b>07</b>Wheels &amp; brakes</button>
-          <button type="button" aria-pressed="false"><b>08</b>Suspension</button>
+        <svg class="g-leader" id="g-leader" aria-hidden="true"></svg>
+        <nav class="g-labels" id="g-labels" aria-label="Car systems">
+          <button type="button" class="g-label" data-sys="0" aria-pressed="false"><b>01</b><span>Shell &amp; interior</span></button>
+          <button type="button" class="g-label" data-sys="1" aria-pressed="false"><b>02</b><span>Hood</span></button>
+          <button type="button" class="g-label" data-sys="2" aria-pressed="false"><b>03</b><span>Body panels</span></button>
+          <button type="button" class="g-label" data-sys="3" aria-pressed="false"><b>04</b><span>Lights</span></button>
+          <button type="button" class="g-label" data-sys="4" aria-pressed="false"><b>05</b><span>Glass</span></button>
+          <button type="button" class="g-label" data-sys="5" aria-pressed="false"><b>06</b><span>Exhaust</span></button>
+          <button type="button" class="g-label" data-sys="6" aria-pressed="false"><b>07</b><span>Wheels &amp; brakes</span></button>
+          <button type="button" class="g-label" data-sys="7" aria-pressed="false"><b>08</b><span>Aero kit</span></button>
         </nav>
 
         <div class="g-cards" id="g-cards">
           <article class="g-card" data-sys="0">
             <button type="button" class="g-close" aria-label="Close">×</button>
-            <p class="g-card-k"><b>01</b> Chassis · shell, cage, bucket seats <span data-parts></span></p>
+            <p class="g-card-k"><b>01</b> Shell &amp; interior</p>
             <h3>Platform &amp; reliability</h3>
-            <p>The part that has to hold when everything else is pushing on it. For me that's the Linux environments my apps run on, and troubleshooting across the app, database and server layers until they stay up.</p>
+            <p>The shell and cabin have to hold when everything else is pushing on them. For me that's the Linux environments my apps run on, and troubleshooting across the app, database and server layers until they stay up.</p>
             <p class="chips"><span>Linux</span><span>Bash</span><span>PowerShell</span><span>Azure</span><span>VMware</span></p>
           </article>
           <article class="g-card" data-sys="1">
             <button type="button" class="g-close" aria-label="Close">×</button>
-            <p class="g-card-k"><b>02</b> Engine · K20, intake, header, exhaust <span data-parts></span></p>
+            <p class="g-card-k"><b>02</b> Hood</p>
             <h3>Backend</h3>
-            <p>Where the real work happens. Services, APIs and databases in Java and Python, from Magna's internal plant apps to PiVault's FastAPI server and its media worker.</p>
+            <p>What's under the hood, where the real work happens. Services, APIs and databases in Java and Python, from Magna's internal plant apps to PiVault's FastAPI server and its media worker.</p>
             <p class="chips"><span>Java</span><span>Python</span><span>FastAPI</span><span>REST APIs</span><span>SQL</span><span>PostgreSQL</span><span>SQLite</span></p>
           </article>
           <article class="g-card" data-sys="2">
             <button type="button" class="g-close" aria-label="Close">×</button>
-            <p class="g-card-k"><b>03</b> Body · panels, lights, wing <span data-parts></span></p>
+            <p class="g-card-k"><b>03</b> Body panels</p>
             <h3>Frontend</h3>
             <p>The part people see first, and the panel gaps have to be right. React dashboards with drill-downs for plant leaders and engineers, and a React Native app for PiVault.</p>
             <p class="chips"><span>React</span><span>React Native (Expo)</span><span>JavaScript</span><span>HTML/CSS</span></p>
           </article>
           <article class="g-card" data-sys="3">
             <button type="button" class="g-close" aria-label="Close">×</button>
-            <p class="g-card-k"><b>04</b> ECU &amp; cockpit · ECU, gauges, wheel <span data-parts></span></p>
+            <p class="g-card-k"><b>04</b> Lights</p>
             <h3>Data &amp; AI</h3>
-            <p>The ECU reads every sensor; the gauges show the driver what matters. Databricks pipelines and Power BI reports that turn plant-floor data into decisions, with AI/ML work on top.</p>
+            <p>Lights show you what's ahead. Databricks pipelines and Power BI reports that turn plant-floor data into decisions, with AI/ML work on top.</p>
             <p class="chips"><span>Databricks</span><span>Power BI</span><span>RAG</span><span>Embeddings</span><span>Vector search</span><span>LangChain</span><span>MLflow</span></p>
           </article>
           <article class="g-card" data-sys="4">
             <button type="button" class="g-close" aria-label="Close">×</button>
-            <p class="g-card-k"><b>05</b> Cooling · radiator, fans, oil cooler <span data-parts></span></p>
+            <p class="g-card-k"><b>05</b> Glass</p>
             <h3>Monitoring</h3>
-            <p>Nobody thinks about the radiator until the temp needle moves. Grafana and Prometheus watching my apps and my Raspberry Pi, so problems show up on a dashboard before they show up as downtime.</p>
+            <p>Glass is how you see what's going on out there. Grafana and Prometheus watching my apps and my Raspberry Pi, so problems show up on a dashboard before they show up as downtime.</p>
             <p class="chips"><span>Grafana</span><span>Prometheus</span></p>
           </article>
           <article class="g-card" data-sys="5">
             <button type="button" class="g-close" aria-label="Close">×</button>
-            <p class="g-card-k"><b>06</b> Gearbox · 6-speed, axles, shifter <span data-parts></span></p>
+            <p class="g-card-k"><b>06</b> Exhaust</p>
             <h3>DevOps</h3>
-            <p>Same clean shift, every time. GitHub Actions pipelines that build, test and deploy on every push, Docker for packaging, and Ansible to provision a whole Pi from one image.</p>
+            <p>Everything runs through the pipes, the same clean flow every time. GitHub Actions pipelines that build, test and deploy on every push, Docker for packaging, and Ansible to provision a whole Pi from one image.</p>
             <p class="chips"><span>Git</span><span>GitHub Actions</span><span>Docker</span><span>Ansible</span><span>CI/CD</span></p>
           </article>
           <article class="g-card" data-sys="6">
             <button type="button" class="g-close" aria-label="Close">×</button>
-            <p class="g-card-k"><b>07</b> Wheels &amp; brakes · 17s, drilled rotors <span data-parts></span></p>
+            <p class="g-card-k"><b>07</b> Wheels &amp; brakes</p>
             <h3>Hardware</h3>
             <p>Where the car meets the real world. FPGA design in VHDL on a Nexys A7, Arduino robotics, and Raspberry Pi builds.</p>
             <p class="chips"><span>FPGA</span><span>VHDL</span><span>Vivado</span><span>C/C++</span><span>Arduino</span><span>Raspberry Pi</span></p>
           </article>
           <article class="g-card" data-sys="7">
             <button type="button" class="g-close" aria-label="Close">×</button>
-            <p class="g-card-k"><b>08</b> Suspension · coilovers, subframes <span data-parts></span></p>
+            <p class="g-card-k"><b>08</b> Aero kit</p>
             <h3>CAD</h3>
             <p>Geometry gets designed before it gets built. SolidWorks and AutoCAD, with a SOLIDWORKS Associate certification.</p>
             <p class="chips"><span>SolidWorks</span><span>AutoCAD</span><span>CSWA 2023</span></p>
           </article>
         </div>
-
-        <div class="g-controls">
-          <div class="g-paint" role="group" aria-label="Paint">
-            <span class="g-paint-name" id="g-paint-name">Vivid Blue Pearl</span>
-            <div class="g-swatches">
-              <button type="button" class="g-swatch" style="--c:#1d4fe6" data-color="#1d4fe6" data-name="Vivid Blue Pearl" data-pearl="0.2" data-metal="0.45" data-sheen="#7fb2ff" aria-pressed="true" aria-label="Vivid Blue Pearl"></button>
-              <button type="button" class="g-swatch" style="--c:#eef0f2" data-color="#e9ecef" data-name="Pearl White" data-pearl="0.25" data-metal="0.15" data-sheen="#ffe9c9" aria-pressed="false" aria-label="Pearl White"></button>
-              <button type="button" class="g-swatch" style="--c:#9aa1aa" data-color="#8f969f" data-name="Satin Silver" data-pearl="0" data-metal="0.8" aria-pressed="false" aria-label="Satin Silver"></button>
-              <button type="button" class="g-swatch" style="--c:#c4121a" data-color="#b80f17" data-name="Rally Red" data-pearl="0.1" data-metal="0.4" aria-pressed="false" aria-label="Rally Red"></button>
-              <button type="button" class="g-swatch" style="--c:#0d0f12" data-color="#0b0c0e" data-name="Midnight Black" data-pearl="0.2" data-metal="0.6" aria-pressed="false" aria-label="Midnight Black"></button>
-            </div>
-          </div>
-          <div class="g-btns">
-            <button type="button" class="btn btn-small" id="g-lights" aria-pressed="false">Lights</button>
-            <button type="button" class="btn btn-small btn-go" id="g-rev">Rev it</button>
-          </div>
-          <div class="g-tach" aria-live="off"><span class="g-rpm" id="g-rpm">850</span><span class="g-rpm-u">rpm</span><span class="g-vtec" id="g-vtec">VTEC</span></div>
-        </div>
-
-        <p class="g-next" id="g-next"><a href="#about">Next: about ↓</a></p>
       </div>
     </section>
     <!-- ================= About ================= -->
@@ -353,8 +328,10 @@
 
   <footer class="footer">
     <span>Aditya Thomas · <span id="year">2026</span></span>
+    <span class="credit">3D model: <a href="https://sketchfab.com/3d-models/2008-ings1-n-spec-aero-acura-rsx-dc5-e0f233d9e5ef4bfa8946ebe437566779" target="_blank" rel="noopener">2008 Ings+1 N-Spec Aero Acura RSX DC5</a> by <a href="https://sketchfab.com/ddiaz-design" target="_blank" rel="noopener">Ddiaz Design</a>, <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener">CC BY-NC-SA 4.0</a>, modified.</span>
   </footer>
 
   <script src="js/main.js"></script>
+  <script type="module" src="js/hero.js"></script>
 </body>
 </html>
