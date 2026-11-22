@@ -6,8 +6,8 @@ import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 
 const html = readFileSync('index.html', 'utf8');
 const css = ['styles.css', 'garage.css'].map((f) => readFileSync(f, 'utf8')).join('\n');
-const scripts = ['js/track.js', 'js/main.js'].map((f) => readFileSync(f, 'utf8'));
-const modules = ['js/garage.js'].map((f) => readFileSync(f, 'utf8'));
+const scripts = ['js/main.js'].map((f) => readFileSync(f, 'utf8'));
+const modules = []; // the 3D garage is off for now
 
 const title = html.match(/<title>[\s\S]*?<\/title>/)[0];
 const fonts = html.match(/<link rel="stylesheet" href="https:\/\/fonts\.googleapis\.com[^>]+>/)[0];

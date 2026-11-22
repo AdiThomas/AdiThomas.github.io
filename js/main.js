@@ -1,8 +1,8 @@
-// Page behaviour outside the circuit: active section in the nav, reveal on scroll,
-// copy-email button and the footer year.
+// Page behaviour: active section in the nav, reveal on scroll, copy-email button
+// and the footer year.
 (function () {
   document.documentElement.classList.add('js');
-  // The garage sits under the sticky top bar, so it needs the bar's height.
+  // The hero sits under the sticky top bar, so it needs the bar's height.
   const bar = document.querySelector('.topbar');
   const setBar = () => bar && document.documentElement.style.setProperty('--topbar-h', bar.offsetHeight + 'px');
   setBar();
@@ -22,17 +22,8 @@
     if (target) spy.observe(target);
   });
 
-  // When the car enters a sector, flash that sector's nav link.
-  document.addEventListener('sector', (e) => {
-    const link = links.find((a) => a.dataset.sector === String(e.detail.sector));
-    if (!link) return;
-    link.classList.remove('flash');
-    void link.offsetWidth; // restart the animation
-    link.classList.add('flash');
-  });
-
-  // Reveal sections as they scroll in. Anything already on screen stays visible.
-  const revealables = document.querySelectorAll('.sec-head, .about, .timing, .stint, .build, .setup, .radio-log');
+  // Reveal blocks as they scroll in. Anything already on screen stays visible.
+  const revealables = document.querySelectorAll('.sec-head, .about, .stint, .build, .spec-row-l, .contact-wrap');
   if ('IntersectionObserver' in window && !reduced) {
     const io = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
