@@ -6,3 +6,8 @@ Changes: rescaled to real size, grouped into named parts for an exploded view
 (hood, bumpers, doors, fenders, hatch, wing, skirts, lights, exhaust, interior,
 wheels, brakes), rims decimated, textures downsized, Draco-compressed.
 This adapted model is shared under the same CC BY-NC-SA 4.0 license.
+
+The four coilovers are adapted from "BC Racing Coilovers" by dermaks
+https://sketchfab.com/3d-models/bc-racing-coilovers-5a516cb4abf34f0a98cd5a09de382c19
+Licensed under CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/).
+Changes: rescaled, stood upright, mirrored and placed at each corner.

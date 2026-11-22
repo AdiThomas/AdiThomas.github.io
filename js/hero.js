@@ -17,7 +17,7 @@ const SYSTEMS = [
   { parts: ['headlight_l', 'headlight_r', 'taillight_l', 'taillight_r'], anchor: 'headlight_l', off: [0, 0, 0] },
   { parts: ['glass'], anchor: 'glass', off: [0.3, 0.2, 0.2] },
   { parts: ['exhaust'], anchor: 'exhaust', off: [0, 0, 0] },
-  { parts: ['wheel_fl', 'wheel_fr', 'wheel_rl', 'wheel_rr', 'brake_fl', 'brake_fr', 'brake_rl', 'brake_rr'], anchor: 'wheel_rl', off: [0.1, 0, 0] },
+  { parts: ['wheel_fl', 'wheel_fr', 'wheel_rl', 'wheel_rr', 'brake_fl', 'brake_fr', 'brake_rl', 'brake_rr', 'coilover_fl', 'coilover_fr', 'coilover_rl', 'coilover_rr'], anchor: 'wheel_rl', off: [0.1, 0, 0] },
   { parts: ['wing', 'skirts'], anchor: 'wing', off: [0.4, 0, 0] },
 ];
 
@@ -46,6 +46,9 @@ const EXPLODE = {
   wheel_rl: { v: [1.15, 0, 0], side: true, d: 0 }, wheel_rr: { v: [1.15, 0, 0], side: true, d: 0 },
   brake_fl: { v: [0.5, 0, 0], side: true, d: 0.08 }, brake_fr: { v: [0.5, 0, 0], side: true, d: 0.08 },
   brake_rl: { v: [0.5, 0, 0], side: true, d: 0.08 }, brake_rr: { v: [0.5, 0, 0], side: true, d: 0.08 },
+  // BC Racing coilovers: rise out of the strut towers and step outboard, between the brakes and the body
+  coilover_fl: { v: [0.22, 0.42, 0], side: true, d: 0.1 }, coilover_fr: { v: [0.22, 0.42, 0], side: true, d: 0.1 },
+  coilover_rl: { v: [0.22, 0.42, 0], side: true, d: 0.1 }, coilover_rr: { v: [0.22, 0.42, 0], side: true, d: 0.1 },
 };
 
 const clamp01 = (x) => (x < 0 ? 0 : x > 1 ? 1 : x);
