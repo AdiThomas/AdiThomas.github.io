@@ -12,7 +12,7 @@ const mobileMQ = matchMedia('(max-width: 899px)');
 // The eight systems: which model parts they cover, and where the leader line attaches (part + local offset in metres).
 const SYSTEMS = [
   { parts: ['shell', 'interior'], anchor: 'shell', off: [0.35, 0.05, -0.2] },
-  { parts: ['hood'], anchor: 'hood', off: [0.2, 0.05, 0.1] },
+  { parts: ['engine', 'gearbox', 'hood'], anchor: 'engine', off: [0.15, 0.12, 0.05] },
   { parts: ['door_l', 'door_r', 'fender_fl', 'fender_fr', 'bumper_f', 'bumper_r', 'hatch'], anchor: 'door_l', off: [0.1, 0.1, 0] },
   { parts: ['headlight_l', 'headlight_r', 'taillight_l', 'taillight_r'], anchor: 'headlight_l', off: [0, 0, 0] },
   { parts: ['glass'], anchor: 'glass', off: [0.3, 0.2, 0.2] },
@@ -27,7 +27,10 @@ const EXPLODE = {
   shell: { v: [0, 0, 0] },
   interior: { v: [0, 0.85, -0.05], d: 0.12 },
   glass: { v: [0, 1.4, 0], d: 0.2 },
-  hood: { v: [0, 0.7, 1.1], d: 0.08 },
+  hood: { v: [0, 1.25, 1.25], d: 0.04 },
+  // K24 rises straight out of the bay; the gearbox unbolts and steps out to the driver's side
+  engine: { v: [0, 0.78, 0.12], d: 0.12 },
+  gearbox: { v: [0.62, 0.52, 0.12], d: 0.16 },
   hatch: { v: [0, 0.55, -1.2], d: 0.1 },
   wing: { v: [0, 0.95, -1.6], d: 0.16 },
   bumper_f: { v: [0, -0.02, 1.1], d: 0 },
@@ -176,6 +179,24 @@ async function start() {
       m = new THREE.MeshPhysicalMaterial({ color: 0xb30c0c, metalness: 0.3, roughness: 0.32, clearcoat: 1, clearcoatRoughness: 0.1 });
     } else if (n === 'breaks1') { // brake disc, textured
       m = src.clone(); m.metalness = 0.85; m.roughness = 0.42;
+    } else if (/^k24_/.test(n)) { // the K24 and gearbox
+      const K = {
+        k24_red_crinkle: { color: 0xa3121a, metalness: 0.15, roughness: 0.62, clearcoat: 0.25, clearcoatRoughness: 0.5 },
+        k24_silver_cover: { color: 0xd9dcdf, metalness: 0.35, roughness: 0.38, clearcoat: 0.4, clearcoatRoughness: 0.25 },
+        k24_badge_plate: { color: 0xe6e8ea, metalness: 0.6, roughness: 0.25 },
+        k24_badge_red: { color: 0xc8101e, metalness: 0.1, roughness: 0.35 },
+        k24_text_light: { color: 0xe9eaec, metalness: 0.4, roughness: 0.3 },
+        k24_cast_alu: { color: 0x9ea3a8, metalness: 0.85, roughness: 0.52 },
+        k24_steel: { color: 0xc4c7cb, metalness: 1, roughness: 0.22 },
+        k24_steel_dark: { color: 0x5c6066, metalness: 0.9, roughness: 0.4 },
+        k24_black_plastic: { color: 0x101113, metalness: 0, roughness: 0.55 },
+        k24_rubber: { color: 0x0b0b0c, metalness: 0, roughness: 0.85 },
+      }[n];
+      m = K ? new THREE.MeshPhysicalMaterial({ ...K, envMapIntensity: 1.1 }) : src.clone();
+    } else if (/^bc /.test(n)) { // BC Racing coilovers
+      const B = { 'bc black': { color: 0x111214, metalness: 0.3, roughness: 0.35, clearcoat: 0.6 }, 'bc gold': { color: 0xc9a14a, metalness: 1, roughness: 0.25 },
+        'bc silver': { color: 0xb9bdc1, metalness: 1, roughness: 0.3 }, 'bc chrome': { color: 0xdfe2e5, metalness: 1, roughness: 0.08 }, 'bc rubber': { color: 0x0b0b0c, metalness: 0, roughness: 0.8 } }[n];
+      m = B ? new THREE.MeshPhysicalMaterial({ ...B, envMapIntensity: 1.1 }) : src.clone();
     } else {
       m = src.clone();
       m.metalness = 0; m.roughness = Math.max(0.45, src.roughness);
