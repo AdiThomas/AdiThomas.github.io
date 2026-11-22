@@ -248,6 +248,7 @@ async function start() {
   let fa = 0, hs = 0, labelsOn = false, focus = -1, hover = -1;
   let spanPx = 1;
   let pointerX = 0, pointerY = 0, px = 0, py = 0;
+  let userYaw = 0, userPitch = 0, velYaw = 0, velPitch = 0, dragging = false, dragId = -1, dragX = 0, dragY = 0;
   let introT = reduced ? 99 : 0;
   let raf = 0, last = 0, visible = true, renders = 0, ready = false;
   let distA = 10, distE = 13;
@@ -392,6 +393,13 @@ async function start() {
     }
     const drift = reduced ? 0 : -0.1 * (1 - ease(introT / 7));
 
+    // drag-to-rotate momentum
+    if (!dragging && (Math.abs(velYaw) > 1e-4 || Math.abs(velPitch) > 1e-4)) {
+      const f = Math.exp(-dt * 5);
+      userYaw += velYaw; userPitch = Math.max(-0.12, Math.min(0.75, userPitch + velPitch));
+      velYaw *= f; velPitch *= f; busy = true;
+    }
+
     // explode
     const e = clamp01((P - 0.15) / 0.45);
     let moved = false;
@@ -419,8 +427,8 @@ async function start() {
     if (fd !== 0) { fa = Math.abs(fd) < 0.002 || reduced ? (focus >= 0 ? 1 : 0) : fa + fd * (1 - Math.exp(-dt * 6)); if (fa !== (focus >= 0 ? 1 : 0)) busy = true; }
     const c = smooth((P - 0.12) / 0.55);
     const dist = distA + (distE - distA) * c;
-    const az = ((36 + 16 * c) * Math.PI) / 180 + drift + px * 0.06;
-    const el = ((9 + 15 * c) * Math.PI) / 180 + py * 0.03;
+    const az = ((36 + 16 * c) * Math.PI) / 180 + drift + px * 0.06 + userYaw;
+    const el = Math.max(0.02, Math.min(1.25, ((9 + 15 * c) * Math.PI) / 180 + py * 0.03 + userPitch));
     camTarget.set(0, midA.y + (midE.y - midA.y) * c, midA.z + (midE.z - midA.z) * c);
     const ce = Math.cos(el);
     camera.position.set(camTarget.x + Math.sin(az) * ce * dist, camTarget.y + Math.sin(el) * dist, camTarget.z + Math.cos(az) * ce * dist);
@@ -461,7 +469,7 @@ async function start() {
 
   if (!reduced) {
     stage.addEventListener('pointermove', (ev) => {
-      if (ev.pointerType === 'touch') return;
+      if (ev.pointerType === 'touch' || dragging) return;
       pointerX = ev.clientX / W - 0.5; pointerY = ev.clientY / H - 0.5; request();
     }, { passive: true });
   }
@@ -474,6 +482,31 @@ async function start() {
   const ray = new THREE.Raycaster(), ndc = new THREE.Vector2();
   let downX = 0, downY = 0;
   canvas.addEventListener('pointerdown', (ev) => { downX = ev.clientX; downY = ev.clientY; }, { passive: true });
+
+  // drag to rotate (horizontal spins freely, vertical tilts within limits; touch keeps vertical page scroll)
+  canvas.addEventListener('pointerdown', (ev) => {
+    if (ev.button !== undefined && ev.button !== 0) return;
+    dragging = true; dragId = ev.pointerId; dragX = ev.clientX; dragY = ev.clientY; velYaw = velPitch = 0;
+    canvas.setPointerCapture?.(ev.pointerId);
+    root.classList.add('dragging');
+  });
+  canvas.addEventListener('pointermove', (ev) => {
+    if (!dragging || ev.pointerId !== dragId) return;
+    const dx = ev.clientX - dragX, dy = ev.clientY - dragY;
+    dragX = ev.clientX; dragY = ev.clientY;
+    velYaw = -dx * 0.0065;
+    velPitch = ev.pointerType === 'touch' ? 0 : dy * 0.004;
+    userYaw += velYaw; userPitch = Math.max(-0.12, Math.min(0.75, userPitch + velPitch));
+    if (Math.abs(dx) + Math.abs(dy) > 2) root.classList.add('rotated');
+    request();
+  });
+  const endDrag = (ev) => {
+    if (!dragging || ev.pointerId !== dragId) return;
+    dragging = false; dragId = -1; root.classList.remove('dragging'); request();
+  };
+  canvas.addEventListener('pointerup', endDrag);
+  canvas.addEventListener('pointercancel', endDrag);
+  canvas.addEventListener('dblclick', () => { userYaw = 0; userPitch = 0; velYaw = velPitch = 0; request(); });
   canvas.addEventListener('click', (ev) => {
     if (Math.abs(ev.clientX - downX) + Math.abs(ev.clientY - downY) > 8) return;
     if (P < 0.62) return;
@@ -515,7 +548,8 @@ async function start() {
     scroll() { manual = false; readScroll(); },
     focus(i) { setFocus(i); },
     renders: () => renders,
-    state: () => ({ P, e: exploded, focus, ready, labelsOn, R_A, R_E, distA, distE }),
+    state: () => ({ P, e: exploded, focus, ready, labelsOn, R_A, R_E, distA, distE, userYaw, userPitch }),
+    rotate(y, p = 0) { userYaw = y; userPitch = p; request(); },
   };
 }
 
